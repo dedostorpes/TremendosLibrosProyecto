@@ -1,5 +1,4 @@
-
-from modules.interface import run_app
+from modules.gui import lanzar_gui
 
 if __name__ == "__main__":
-    run_app()
+    lanzar_gui()
