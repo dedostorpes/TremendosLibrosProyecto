@@ -1,3 +1,0 @@
-# utils.py
-
-# Funciones auxiliares

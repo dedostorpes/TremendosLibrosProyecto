@@ -1,4 +1,5 @@
-# main.py
 
-if __name__ == '__main__':
-    print("Tremendos App iniciada")
+from modules.interface import run_app
+
+if __name__ == "__main__":
+    run_app()

@@ -1,0 +1,8 @@
+
+pandas
+openpyxl
+gspread
+oauth2client
+reportlab
+pyqt5
+python-dotenv
