@@ -1,0 +1,8 @@
+pandas
+gspread
+oauth2client
+openpyxl
+PyQt5
+python-docx
+reportlab
+requests
