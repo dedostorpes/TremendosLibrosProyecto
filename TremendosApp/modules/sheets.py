@@ -70,7 +70,7 @@ def agregar_venta_a_sheets(venta: dict):
     worksheet.append_row(fila, value_input_option="USER_ENTERED")
     print("✅ Venta agregada a Google Sheets.")
     
-    def registrar_encargo_en_sheets(nombre_cliente, pedido):
+def registrar_encargo_en_sheets(nombre_cliente, pedido):
     nueva_fila = [datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), nombre_cliente, pedido]
     try:
         hoja_encargos = sheet.worksheet("Encargos")  # Asegúrate que exista esta hoja
