@@ -9,12 +9,15 @@ load_dotenv()
 SHEET_NAME = os.getenv("GOOGLE_SHEET_NAME")
 SERVICE_ACCOUNT_FILE = os.getenv("GOOGLE_SERVICE_ACCOUNT_FILE")
 
-scopes = ["https://www.googleapis.com/auth/spreadsheets"]
+scopes = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive"
+]
 credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=scopes)
 client = gspread.authorize(credentials)
 
 sheet = client.open(SHEET_NAME)
-worksheet = sheet.worksheet("Hoja 1")  # Cambia el nombre si es diferente
+worksheet = sheet.worksheet("Stock")  # Cambia el nombre si es diferente
 
 def cargar_inventario():
     data = worksheet.get_all_records()
