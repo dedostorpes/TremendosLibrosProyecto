@@ -1,25 +1,30 @@
-import tkinter as tk
-from modules.ventas import cargar_venta_manual
-from modules.reportes import generar_reporte_pdf
-from modules.encargos import registrar_encargo
-from modules.sheets import actualizar_google_sheets
+
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel
+from modules.logic import cargar_venta_manual, generar_reporte_pdf, registrar_encargo
 
 def lanzar_gui():
-    root = tk.Tk()
-    root.title("Tremendos Libros - Gestión de Ventas")
-    root.geometry("800x600")
+    app = QApplication([])
 
-    def on_generar_reporte():
-        generar_reporte_pdf()
+    ventana = QWidget()
+    ventana.setWindowTitle("Sistema de gestión de ventas")
 
-    def on_cargar_venta():
-        cargar_venta_manual()
+    layout = QVBoxLayout()
 
-    def on_registrar_encargo():
-        registrar_encargo()
+    label = QLabel("Tremendos Libros - Gestión")
+    layout.addWidget(label)
 
-    tk.Button(root, text="Cargar venta", command=on_cargar_venta).pack(pady=10)
-    tk.Button(root, text="Generar reporte PDF", command=on_generar_reporte).pack(pady=10)
-    tk.Button(root, text="Registrar encargo", command=on_registrar_encargo).pack(pady=10)
+    boton_cargar = QPushButton("Cargar venta")
+    boton_cargar.clicked.connect(cargar_venta_manual)
+    layout.addWidget(boton_cargar)
 
-    root.mainloop()
+    boton_reporte = QPushButton("Generar reporte PDF")
+    boton_reporte.clicked.connect(generar_reporte_pdf)
+    layout.addWidget(boton_reporte)
+
+    boton_encargo = QPushButton("Registrar encargo")
+    boton_encargo.clicked.connect(registrar_encargo)
+    layout.addWidget(boton_encargo)
+
+    ventana.setLayout(layout)
+    ventana.show()
+    app.exec_()
