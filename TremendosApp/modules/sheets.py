@@ -1,5 +1,6 @@
 import os
 import gspread
+import datetime
 from dotenv import load_dotenv
 from google.oauth2.service_account import Credentials
 
@@ -40,3 +41,40 @@ def actualizar_google_sheets():
     # Por ejemplo, leer todo el contenido
     rows = worksheet.get_all_values()
     print(f"Se cargaron {len(rows)} filas de la hoja.")
+    
+def agregar_venta_a_sheets(venta: dict):
+    """
+    Agrega una venta al Google Sheet.
+    Se espera un diccionario con claves como 'Fecha', 'Título', 'Precio venta', etc.
+    """
+    import datetime
+    
+    global worksheet  # Usa el worksheet ya cargado al inicio del módulo
+    
+    # Armar fila en el orden esperado
+    fila = [
+        venta.get("Fecha", datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
+        venta.get("Proveedor", ""),
+        venta.get("Precio del lote", ""),
+        venta.get("Precio unitario", ""),
+        venta.get("Precio de venta", ""),
+        venta.get("%", ""),
+        venta.get("Título", ""),
+        venta.get("Autor", ""),
+        venta.get("Editorial", ""),
+        venta.get("Colección", ""),
+        venta.get("Comentarios", ""),
+        "NO"  # Vendido: por defecto NO; si ya está vendido, puede marcarse como 'SI'
+    ]
+    
+    worksheet.append_row(fila, value_input_option="USER_ENTERED")
+    print("✅ Venta agregada a Google Sheets.")
+    
+    def registrar_encargo_en_sheets(nombre_cliente, pedido):
+    nueva_fila = [datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), nombre_cliente, pedido]
+    try:
+        hoja_encargos = sheet.worksheet("Encargos")  # Asegúrate que exista esta hoja
+    except WorksheetNotFound:
+        hoja_encargos = sheet.add_worksheet(title="Encargos", rows="100", cols="3")
+        hoja_encargos.append_row(["Fecha", "Cliente", "Pedido"])
+    hoja_encargos.append_row(nueva_fila)
